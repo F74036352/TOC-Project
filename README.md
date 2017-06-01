@@ -27,6 +27,8 @@ python3 app.py
 #### 一開始的init state：
 * 執行完code後，，可輸入"hi",系統將會回應使用者。
 
+* 可輸入"about"或是"關於",系統將會從網頁上擷取關於權力遊戲的介紹給使用者。
+
 * 輸入"族語"、"演員" 或是 "影音"，
   也可以輸入英文的"family language"、"actor" 或是 "video"，
   輸入完後將會進入相對應的state中。

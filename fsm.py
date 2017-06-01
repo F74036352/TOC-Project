@@ -1,13 +1,36 @@
 from transitions.extensions import GraphMachine
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
 
-
+        
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(
             model = self,
             **machine_configs            
-        )            
+        )                
+        
+    def is_going_to_state16(self, update):
+        text = update.message.text        
+        if text.lower() == '關於':
+            return text.lower() == '關於'
+        elif text.lower() == 'about':
+            return text.lower() == 'about'                      
+                    
+    def on_enter_state16(self, update):
+        update.message.reply_text("介紹(introduction)：")
+        html = urlopen("http://zh.asoiaf.wikia.com/wiki/%E5%86%B0%E4%B8%8E%E7%81%AB%E4%B9%8B%E6%AD%8C")           	       
+        background= BeautifulSoup(html.read())
+        #print(background)
+        ray=background.find('p')
+        update.message.reply_text(ray.text)
+       	#update.message.reply_text("KKK")       
+       	#update.message.reply_text("NNN")         
+        self.go_back(update)
 
+    def on_exit_state16(self, update):
+        print('Leaving state16')            
+                
     def is_going_to_user(self, update):
         text = update.message.text
         return text.lower() == 'hi'#'Stark'
